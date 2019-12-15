@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <form th:action="@{/autorization}" method="get">
+        <div><label>    User name</label> <input type="text" name="name" placeholder="Имя пользователя"/></div>
+        <div><label>   User password</label> <input type="text" name="password" placeholder="Пароль пользователя"/></div>
+        <input type="submit" value="Авторизоваться">
+    </form>
+</div>
+</body>
+</html>
