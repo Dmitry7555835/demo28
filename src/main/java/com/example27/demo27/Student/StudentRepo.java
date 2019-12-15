@@ -8,7 +8,7 @@ import java.util.List;
 public interface StudentRepo extends CrudRepository<Student, Integer> {
     List<Student>findById(int id);
 
-    List<Student>deleteById(int id);
+    List<Student>deleteById(int id);//
 
     List<Student> findByNameAndPassword(String name, String password);
 
