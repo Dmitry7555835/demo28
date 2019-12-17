@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.sql.ResultSet;
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +31,6 @@ public class StudentController {
                              Map<String, Object> model) {
         Student student = new Student(name, password);
         studentRepo.save(student);
-
         return "redirect:/mainBook";
     }
 
@@ -61,18 +57,11 @@ public class StudentController {
     @GetMapping("/autorization")
     public String autorization(@RequestParam(required = false) String name, @RequestParam(required = false) String password,
                                Map<String, Object> model) {
-       // Iterable<Student> student = studentRepo.findByNameAndPassword(name,password);
-        List<Student>student=studentRepo.findByNameAndPassword(name,password);
-        if (studentRepo.findByNameAndPassword(name,password).equals(student)) {
-            System.out.println(student);
-            System.out.println(studentRepo.findByNameAndPassword(name, password));
-            return "/mainbook";
-        } else {
-            System.out.println(student+"   gggggggggg");
-            System.out.println(studentRepo.findByNameAndPassword(name, password)+" jjjjjjjjjjj");
-            return "/autorization";
-        }
-
+        List<Student> student = studentRepo.findByNameAndPassword(name, password);
+        System.out.println(student);
+        return "/autorization";
     }
 
 }
+
+

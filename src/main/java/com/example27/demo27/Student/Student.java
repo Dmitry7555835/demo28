@@ -19,8 +19,8 @@ public class Student {
     }
 
     public Student(String name, String password) {
-        this.name=name;
-        this.password=password;
+        this.name = name;
+        this.password = password;
     }
 
     public int getId() {
@@ -47,3 +47,5 @@ public class Student {
         this.password = password;
     }
 }
+
+
