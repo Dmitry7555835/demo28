@@ -1,34 +1,31 @@
-package com.example27.demo27.Student;
+package com.example27.demo27.admin;
 
-import javax.persistence.*;
-import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Entity
-public class Student {
+public class Admin {
 
     @Id
     @GeneratedValue
     int id;
     String name;
     String password;
-    int id_book;
-    @Temporal(TemporalType.DATE)
-    private Date date;
 
-    public Student() {
-
+    public Admin() {
     }
 
-    public Student(String name, String password) {
+    public Admin(String name, String password) {
         this.name = name;
         this.password = password;
     }
 
-    public int getId() {
+    public int getid() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setid(int id) {
         this.id = id;
     }
 
@@ -48,20 +45,9 @@ public class Student {
         this.password = password;
     }
 
-    public int getId_book() {
-        return id_book;
-    }
-
-    public void setId_book(int id_book) {
-        this.id_book = id_book;
-    }
-
     @Override
     public String toString() {
         return
                 name + password;
     }
-
 }
-
-

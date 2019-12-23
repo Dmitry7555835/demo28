@@ -1,6 +1,5 @@
 package com.example27.demo27.book;
 
-import com.example27.demo27.Student.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,25 +15,25 @@ public class BookController {
     public BookRepo bookRepo;
 
     @GetMapping("/mainBook")
-    public String mainBook(@RequestParam (name = "name", required = false, defaultValue = "book") String name,
-                           Map<String, Object>modelBooks){
-             modelBooks.put("name",name);
+    public String mainBook(@RequestParam(name = "name", required = false, defaultValue = "book") String name,
+                           Map<String, Object> modelBooks) {
+        modelBooks.put("name", name);
         return "mainBook";
     }
 
     @PostMapping("addBook")
-    public String addbook(@RequestParam String name, @RequestParam String autor, Map<String, Object>modelBooks ){
-        Book book =new Book(name, autor);
+    public String addbook(@RequestParam String name, @RequestParam String autor, @RequestParam int amount, Map<String, Object> modelBooks) {
+        Book book = new Book(name, autor, amount);
         bookRepo.save(book);
         modelBooks.put("book", book);
-        return "mainBook";
+        return "MainAdmin";
     }
 
     @PostMapping("delBook")
-    public String delBook(@RequestParam int id, Map<String, Object>modelBooks){
-        Iterable<Book> books= bookRepo.deleteById(id);
-        modelBooks.put("book",books);
-        return "mainBook";
+    public String delBook(@RequestParam int id, Map<String, Object> modelBooks) {
+        Iterable<Book> books = bookRepo.deleteById(id);
+        modelBooks.put("book", books);
+        return "MainAdmin";
     }
 
     @PostMapping("findBook")
@@ -45,10 +44,11 @@ public class BookController {
     }
 
     @PostMapping("findAllBook")
-    public String findall(Map<String, Object>modelBooks) {
+    public String findall( Map<String, Object> modelBooks) {
         Iterable<Book> books = bookRepo.findAll();
         modelBooks.put("book", books);
         return "mainBook";
     }
+
 
 }

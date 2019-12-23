@@ -12,12 +12,14 @@ public class Book {
     private int id;
     private String name;
     private String autor;
+    private  int amount;
 
     public Book() {
     }
-    public Book(String name, String autor) {
+    public Book(String name, String autor, int amount) {
         this.name=name;
         this.autor=autor;
+        this.amount=amount;
     }
 
     public int getId() {
@@ -42,5 +44,13 @@ public class Book {
 
     public void setAutor(String autor) {
         this.autor = autor;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 }

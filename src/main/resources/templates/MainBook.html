@@ -6,23 +6,8 @@
 </head>
 <body>
 <div align="center">
-    <form method="post" action="addBook">
-        <div><label>Название книги <input type="text" name="name" placeholder="Название"></label></div>
-        <div><label>Автор <input type="text" name="autor" placeholder="Автор"></label></div>
-        <input type="submit" value="Добавить книгу">
-    </form>
-    <p></p>
-</div>
-<div align="center">
-    <form method="post" action="delBook">
-        <div><label>Удалить книгу <input type="number" name="id" placeholder="Введи id книги"></label></div>
-        <input type="submit" value="Удалить">
-        <p></p>
-    </form>
-</div>
-<div align="center">
     <form method="post" action="findBook">
-        <div><label>Найти книгу <input type="text" name="name" placeholder="Введи название"></label></div>
+        <div><label>Найти книгу <input type="text" name="nameBook" placeholder="Введи название"></label></div>
         <input type="submit" value="Найти книгу">
     </form>
 </div>
@@ -31,6 +16,13 @@
         <p></p>
         <input type="submit", value="Показать все">
         <p></p>
+    </form>
+</div>
+
+<div>
+    <form method="post" action="/take">
+        <div><label>Введи название книги</label><input type="text" name="nameBook" placeholder="Введи название книги"></div>
+    <input type="submit" value="Взять книгу">
     </form>
 </div>
 <div align="center">

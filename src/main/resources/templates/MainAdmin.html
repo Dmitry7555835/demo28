@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div align="center">
+    <form method="post" action="/finduser">
+        <p style="text-indent:30px">
+        <div><label> User id</label> <input type="number" name="find" placeholder=" поиск по id "/></div>
+        <p></p>
+        <input type="submit" , value="Найти пользователя">
+    </form>
+</div>
+<p></p>
+<div align="center">
+    <form method="post" action="/findAllUser">
+        <p></p>
+        <input type="submit" , value="Показать всех">
+        <p></p>
+    </form>
+    <div align="center">
+        <form method="post" action="/findAllAdmin">
+            <p></p>
+            <input type="submit" , value="Показать админов">
+            <p></p>
+        </form>
+    </div>
+    <div align="center">
+        <form method="post" action="/addadmin">
+            <div><label> Admin name</label> <input type="text" name="name" placeholder="Имя админа"/></div>
+            <p style="text-indent:-24px"><label>Admin password</label><input type="password" name="password"
+                                                                             placeholder="Пароль"/>
+            <p style="text-indent:100px"><input type="submit" , value="Добавить админа">
+        </form>
+    </div>
+    <div align="center">
+        <form method="post" action="/deluser">
+            <p style="text-indent:30px">
+            <div><label> User id</label> <input type="number" name="del" placeholder="id к удалению"/></div>
+            <p></p>
+            <input type="submit" , value="Удалить пользователя">
+        </form>
+        <p></p>
+    </div>
+    <div align="center">
+        <form method="post" action="addBook">
+            <div><label>Название книги <input type="text" name="name" placeholder="Название"></label></div>
+            <p></p>
+            <div><label>Автор <input type="text" name="autor" placeholder="Автор"></label></div>
+            <p></p>
+            <div><label>Количество <input type="number" name="amount" placeholder="Количество"></label></div>
+            <p></p>
+            <input type="submit" value="Добавить книгу">
+        </form>
+        <p></p>
+    </div>
+    <div align="center">
+        <form method="post" action="delBook">
+            <div><label>Удалить книгу <input type="number" name="id" placeholder="Введи id книги"></label></div>
+            <input type="submit" value="Удалить">
+            <p></p>
+        </form>
+    </div>
+    <div align="center">
+        <h2>student</h2>
+        <table border="1"cellspacing="0"cellpadding="2" bgcolor="#5f9ea0">
+            <tr>
+                <td>id</td>
+                <td>name</td>
+            </tr>
+            <tr th:each="student : ${student}">
+                <td th:text="${student.id}"></td>
+                <td th:text="${student.name}"></td>
+            </tr>
+        </table>
+    </div>
+    <div align="center">
+        <h2>admin</h2>
+
+        <table border="2" cellspacing="0" cellpadding="2" bgcolor="#ff7f50">
+            <tr>
+                <td>name</td>
+            </tr>
+            <tr th:each="admin : ${admin}">
+                <td th:text="${admin.name}"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>
