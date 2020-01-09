@@ -63,7 +63,6 @@ public class StudentController {
                                    Map<String, Object> model) {
         List<Student> student = studentRepo.findByNameAndPassword(name, password);
         for (int i = 0; i < student.size(); i++) {
-           // System.out.println(student.get(i).toString());
             if (student.get(i).toString().equals(name + password)) {
                 return "MainBook";
             }
@@ -73,16 +72,10 @@ public class StudentController {
 
     @Transactional
     @PostMapping("take")
-    public String updatebook( @RequestParam("nameBook") int id_book, @RequestParam("id_student") int  id_student, Map<String, Object> model){
-
-        studentRepo.updateBook(4,2);
-
-
-        System.out.println(11111);
-        //   studentController.autorizationuser(name,password, modelupdate);
-        //   System.out.println(studentController.toString());
-
-        // bookController.findBook(nameBook,modelupdate);findBook(
+    public String updateadd( @RequestParam("nameBook") String nameBook, @RequestParam("studentName") String  studentName,
+                              Map<String, Object> model){
+        studentRepo.updateBook(nameBook,  studentName);
+        System.out.println(1111);
         return "mainBook";
     }
 
