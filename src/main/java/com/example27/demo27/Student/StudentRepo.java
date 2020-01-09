@@ -1,8 +1,5 @@
 package com.example27.demo27.Student;
 
-import com.example27.demo27.Student.Student;
-
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -23,10 +20,16 @@ public interface StudentRepo  extends  CrudRepository<Student, Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "update Student s set s.id_book = (select b.id from book b where b.name =  :nameBook) where s.name = :studentName", nativeQuery = true)
-    default void updateBook(@Param("nameBook") String nameBook, @Param("studentName") String studentName) {
+    @Query(value = "update Student s set s.id_book = (select b.id from book b where b.name =  :nameBook), s.date=CURDATE(), s.amount=s.amount+1" +
+            " where s.name = :studentName", nativeQuery = true)
+    int  takeBook(@Param("nameBook") String nameBook, @Param("studentName") String studentName) ;
 
-    }
+    @Transactional
+    @Modifying
+    @Query(value = "update book b set b.amount=b.amount-1", nativeQuery = true)
+    int  updateBookAmount(@Param("nameBook") String nameBook) ;
+
+
 
 
 }

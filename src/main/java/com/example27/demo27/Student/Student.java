@@ -12,6 +12,7 @@ public class Student {
     String name;
     String password;
     int id_book;
+    int amount;
     @Temporal(TemporalType.DATE)
     private Date date;
 
@@ -22,6 +23,14 @@ public class Student {
     public Student(String name, String password) {
         this.name = name;
         this.password = password;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
     public int getId() {

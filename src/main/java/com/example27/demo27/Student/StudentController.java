@@ -64,6 +64,7 @@ public class StudentController {
         List<Student> student = studentRepo.findByNameAndPassword(name, password);
         for (int i = 0; i < student.size(); i++) {
             if (student.get(i).toString().equals(name + password)) {
+
                 return "MainBook";
             }
         }
@@ -72,10 +73,14 @@ public class StudentController {
 
     @Transactional
     @PostMapping("take")
-    public String updateadd( @RequestParam("nameBook") String nameBook, @RequestParam("studentName") String  studentName,
+    public String takeBook( @RequestParam("nameBook") String nameBook, @RequestParam("studentName") String  studentName,
                               Map<String, Object> model){
-        studentRepo.updateBook(nameBook,  studentName);
-        System.out.println(1111);
+
+       //создать метод на проверку того, что книга уже есть у пользователя и, если есть , то сказать, что книга уже на руках (желательно всплывающим окном)
+
+        studentRepo.takeBook(nameBook,  studentName);
+        studentRepo.updateBookAmount(nameBook);
+        System.out.println(studentName);
         return "mainBook";
     }
 
