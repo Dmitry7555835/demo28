@@ -71,16 +71,21 @@ public class StudentController {
         return "/autorizationuser";
     }
 
+    @PostMapping("/blok")
+    public void blok (){
+        System.out.println(2222);
+    }
+
     @Transactional
-    @PostMapping("take")
+    @PostMapping("/take")
     public String takeBook( @RequestParam("nameBook") String nameBook, @RequestParam("studentName") String  studentName,
                               Map<String, Object> model){
 
        //создать метод на проверку того, что книга уже есть у пользователя и, если есть , то сказать, что книга уже на руках (желательно всплывающим окном)
+        blok();
 
         studentRepo.takeBook(nameBook,  studentName);
         studentRepo.updateBookAmount(nameBook);
-        System.out.println(studentName);
         return "mainBook";
     }
 

@@ -30,6 +30,4 @@ public interface StudentRepo  extends  CrudRepository<Student, Integer> {
     int  updateBookAmount(@Param("nameBook") String nameBook) ;
 
 
-
-
 }
