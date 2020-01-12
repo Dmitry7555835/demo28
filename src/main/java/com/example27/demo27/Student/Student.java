@@ -14,7 +14,9 @@ public class Student {
     int id_book;
     int amount;
     @Temporal(TemporalType.DATE)
-    private Date date;
+    private Date date_take;
+    @Temporal(TemporalType.DATE)
+    private Date date_return;
 
     public Student() {
 

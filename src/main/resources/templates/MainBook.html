@@ -6,15 +6,15 @@
 </head>
 <body>
 <div align="center">
-    <form method="post" action="findBook">
-        <div><label>Найти книгу <input type="text" name="nameBook" placeholder="Введи название"></label></div>
-        <input type="submit" value="Найти книгу">
+    <form method="post" action="/findBook">
+        <div><label>Найти книгу</label> <input type="text" name="nameBook" placeholder="Введи название"></div>
+        <input type="submit" , value="Найти книгу">
     </form>
 </div>
 <div align="center">
     <form method="post" action="/findAllBook">
         <p></p>
-        <input type="submit", value="Показать все">
+        <input type="submit" , value="Показать все">
         <p></p>
     </form>
 </div>
@@ -22,67 +22,80 @@
 <div>
     <form method="post" action="/take">
         <div><label>Введи название книги</label><input type="text" name="nameBook" placeholder="Введи название книги"></div>
-        <div><label>Введи имя студента</label><input type="text" name="studentName" placeholder="Введи имя студента"></div>
-    <input type="submit" value="Взять книгу">
+        <input type="submit" , value="Взять книгу">
     </form>
 
-<div>
-    <form method="post" action="/blok">
-        <style>
-            #main {
-                display: none;
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-            }
-            #window {
-                width: 300px;
-                height: 50px;
-                text-align: center;
-                padding: 15px;
-                border: 3px solid #0000cc;
-                color: #0000cc;
-                position: absolute;
-                top: 0;
-                right: 0;
-                bottom: 0;
-                left: 0;
-                margin: auto;
-            }
-            #main:target {display: block;}
-        </style>
-    <body>
-    <a href="#" id="main">
-        <div id="window">
-            Всплывающее окошко!
-        </div>
-    </a>
-    <a href="#main">hh</a>
-    </body>
+    <div>
+        <form method="post" action="/blok">
+
+            <style>
+                #main {
+                    display: none;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                }
+
+                #window {
+                    width: 400px;
+                    height: 50px;
+                    text-align: center;
+                    padding: 15px;
+                    border: 3px solid #0000cc;
+                    color: red;
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                    margin: auto;
+                }
+
+                #main:target {
+                    display: block;
+                }
+            </style>
+            <body>
+            <a href="#" id="main">
+                <div id="window">
+                    ПРОВЕРЬ НАЗВАНИЕ КНИГИ И ЕЁ НАЛИЧИЕ.
+                    <p></p>
+                    для закрытия окна - нажми в любом месте
+                </div>
+            </a>
+            <a href="#main">вызов</a>
+            </body>
+        </form>
+    </div>
+
+
+    <div align="center">
+        <h2>BOOK</h2>
+        <table>
+            <thead c:align="center">
+            <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>autor</th>
+                <th>наличие</th>
+            </tr>
+            </thead>
+            <tbody c:align="center">
+            <tr th:each="book : ${book}">
+                <td th:text="${book.id}"></td>
+                <td th:text="${book.name}"></td>
+                <td th:text="${book.autor}"></td>
+                <td th:text="${book.amount}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <form method="post" action="/returnbook">
+        <div><input type="text" name="nameBook" placeholder="Название книги"></div>
+        <input type="submit" value="Вернуть книгу">
     </form>
-</div>
-
-
-<div align="center">
-    <h2>BOOK</h2>
-    <table>
-        <thead c:align="center">
-        <tr>
-            <th>id</th>
-            <th>name</th>
-            <th>autor</th>
-        </tr>
-        </thead>
-        <tbody c:align="center">
-        <tr th:each="book : ${book}">
-            <td th:text="${book.id}"></td>
-            <td th:text="${book.name}"></td>
-            <td th:text="${book.autor}"></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
 </body>
 </html>

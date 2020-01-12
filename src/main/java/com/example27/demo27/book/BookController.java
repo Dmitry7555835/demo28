@@ -37,7 +37,7 @@ public class BookController {
     }
 
     @PostMapping("findBook")
-    public String findBook(@RequestParam String name, Map<String, Object>modelBooks) {
+    public String findBook(@RequestParam (required = false) String name, Map<String, Object>modelBooks) {//Не отображает книгу
         Iterable<Book> books = bookRepo.findByName(name);
         modelBooks.put("book", books);
         return "mainBook";

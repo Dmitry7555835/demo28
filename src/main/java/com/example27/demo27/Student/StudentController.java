@@ -1,20 +1,25 @@
 package com.example27.demo27.Student;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jdbc.repository.query.Query;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.List;
 import java.util.Map;
 
 @Controller
 public class StudentController {
+
+    String studentName;
 
     @Autowired
     public StudentRepo studentRepo;
@@ -64,7 +69,7 @@ public class StudentController {
         List<Student> student = studentRepo.findByNameAndPassword(name, password);
         for (int i = 0; i < student.size(); i++) {
             if (student.get(i).toString().equals(name + password)) {
-
+                studentName = name;
                 return "MainBook";
             }
         }
@@ -72,20 +77,39 @@ public class StudentController {
     }
 
     @PostMapping("/blok")
-    public void blok (){
-        System.out.println(2222);
+    public void blok() {
+
+
     }
 
     @Transactional
     @PostMapping("/take")
-    public String takeBook( @RequestParam("nameBook") String nameBook, @RequestParam("studentName") String  studentName,
-                              Map<String, Object> model){
+    public String takeBook(@RequestParam("nameBook") String nameBook) {
+        if (nameBook.equals(studentRepo.selectStudent(nameBook, studentName))) {
+            System.out.println("Книга у вас на руках");
+        } else if (nameBook.equals(studentRepo.selectBook(nameBook))) {
+            studentRepo.updateBookAmount(nameBook);
+            studentRepo.takeBook(nameBook, studentName);
+            System.out.println("книга взята");
+        } else if (nameBook == "") {
+            System.out.println("Вы ничего не выбрали");
+        } else if (!nameBook.equals(studentRepo.selectBook(nameBook))) {
+            System.out.println("нету в наличии книги");
+        }
 
-       //создать метод на проверку того, что книга уже есть у пользователя и, если есть , то сказать, что книга уже на руках (желательно всплывающим окном)
-        blok();
+        return "mainBook";
+    }
 
-        studentRepo.takeBook(nameBook,  studentName);
-        studentRepo.updateBookAmount(nameBook);
+    @PostMapping("/returnbook")
+    public String returnBook(@RequestParam("nameBook") String nameBook) {
+        if (nameBook.equals(studentRepo.selectStudent(nameBook, studentName))) {
+            studentRepo.returnBook(nameBook);
+            studentRepo.returnStudent(studentName);
+            System.out.println("Книга возвращена");
+        } else if (!nameBook.equals(studentRepo.selectStudent(nameBook, studentName))) {
+            System.out.println("Вы не брали/вернули эту книгу");
+        }
+
         return "mainBook";
     }
 
