@@ -13,12 +13,21 @@ public class Student {
     String password;
     @Temporal(TemporalType.DATE)
     private Date date_reg;
+    String ban;
 
     public Student() {}
 
     public Student(String name, String password) {
         this.name = name;
         this.password = password;
+    }
+
+    public String getBan() {
+        return ban;
+    }
+
+    public void setBan(String ban) {
+        this.ban = ban;
     }
 
     public String getName() {

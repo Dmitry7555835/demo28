@@ -53,6 +53,14 @@ public interface StudentRepo extends CrudRepository<Student, Integer> {
     @Query(value = "update student_Book sb set sb.date_return =CURDATE()  where sb.id_Student = :idStudent and  sb.name_book = :nameBook", nativeQuery = true)
     int returnStudent(@Param("nameBook") String nameBook,@Param("idStudent") int idStudent);
 
+    @Transactional
+    @Modifying
+    @Query(value = "update student s set s.ban ='BAN' where s.id = (select id_student from student_Book where CURDATE()-date_take>14 )", nativeQuery = true)
+    int ban();
 
+    @Transactional
+    @Modifying
+    @Query(value = "update student s set s.ban =null where s.id = (select id_student from student_Book where CURDATE()-date_take>14 and date_return  is not null) ", nativeQuery = true)
+    int unBan();
 
 }

@@ -82,12 +82,6 @@ public class StudentController {
         return "/autorizationuser";
     }
 
-    @PostMapping("/blok")
-    public void blok() {
-
-
-    }
-
     @PostMapping("/take")
     public String takeBook(@RequestParam("nameBook") String nameBook) {
         if (nameBook.toUpperCase().equals(studentRepo.selectStudent(nameBook, studentName))) {
@@ -99,8 +93,8 @@ public class StudentController {
         } else if (nameBook == "") {
             System.out.println("Вы ничего не выбрали");
         } else if (!nameBook.toUpperCase().equals(studentRepo.selectBook(nameBook.toUpperCase()))) {
-            System.out.println("нету в наличии книги");
-        }
+            System.out.println("нету в наличии книги");--------------------//Добавить бан если не вернул книги СЕЛЕКТ НАПИСАН
+        }                                                   --------------// Добавить метод проверки книг на рукох
 
         return "mainBook";
     }
