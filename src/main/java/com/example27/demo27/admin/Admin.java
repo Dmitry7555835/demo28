@@ -7,6 +7,9 @@ import javax.persistence.Id;
 @Entity
 public class Admin {
 
+    static final String adminPass = "admin";
+    static final String PASSWORD = "admin";
+
     @Id
     @GeneratedValue
     int id;

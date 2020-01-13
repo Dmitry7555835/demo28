@@ -12,38 +12,46 @@ import java.util.List;
 
 @Repository
 public interface StudentRepo extends CrudRepository<Student, Integer> {
+
     List<Student> findById(int id);
 
     List<Student> deleteById(int id);
 
     List<Student> findByNameAndPassword(String name, String password);
 
-    @Query(value = "select name from book b where name=:nameBook and amount>0", nativeQuery = true)
+    @Transactional
+    @Modifying
+    @Query(value = "insert into student (name,password,date_reg) select :studentName,:studentpassword, current_date ()",nativeQuery = true)
+    int studentadd ( @Param("studentName") String studentName, @Param("studentpassword") String studentpassword);
+
+    @Query(value = "select UPPER(name) from book b where UPPER(name)=:nameBook and amount>0", nativeQuery = true)
     String selectBook(@Param("nameBook") String nameBook);
 
-    @Query(value = "select b.name from book b where b.id in (select s.id_book from Student s where s.name=:studentName) and b.name =:nameBook", nativeQuery = true)
+    @Query(value = "select UPPER(b.name) from book b where b.name in " +
+            "(select sb.name_book from student_Book sb where sb.id_student = (select id from student s where name =:studentName)) and b.name =:nameBook", nativeQuery = true)
     String selectStudent(@Param("nameBook") String nameBook, @Param("studentName") String studentName);//проверка наличия книги на руках
 
     @Transactional
     @Modifying
-    @Query(value = "update Student s set s.id_book = (select b.id from book b where b.name =  :nameBook), s.date_take=CURDATE(), s.amount=s.amount+1" +// Добавить skey uniq
-            " where s.name = :studentName", nativeQuery = true)
-    int takeBook(@Param("nameBook") String nameBook, @Param("studentName") String studentName);
+    @Query(value = "insert into student_Book (date_take,id_student,name_book) " +
+            "select CURDATE(), s.id, b.name  from student s RIGHT JOIN book b on s.id = :studentId  and  b.name = :nameBook where s.id is not null and b.name is not null",nativeQuery = true)
+    int takeBook(@Param("nameBook") String nameBook, @Param("studentId") int studentId);// на insert потрачено 3 часа
+
 
     @Transactional
     @Modifying
-    @Query(value = "update book b set b.amount=b.amount-1 where name=:nameBook", nativeQuery = true)
+    @Query(value = "update book b set b.amount=b.amount-1 where UPPER(b.name)=:nameBook", nativeQuery = true)
     int updateBookAmount(@Param("nameBook") String nameBook);
 
     @Transactional
     @Modifying
-    @Query(value = "update book b set b.amount=b.amount+1 where name=:nameBook", nativeQuery = true)
+    @Query(value = "update book b set b.amount=b.amount+1 where UPPER(name)=:nameBook", nativeQuery = true)
     int returnBook(@Param("nameBook") String nameBook);
 
     @Transactional
     @Modifying
-    @Query(value = "update Student s set s.id_book = 0, s.date_return=CURDATE(), s.amount=s.amount-1 where s.name = :studentName", nativeQuery = true)
-    int returnStudent(@Param("studentName") String studentName);
+    @Query(value = "update student_Book sb set sb.date_return =CURDATE()  where sb.id_Student = :idStudent and  sb.name_book = :nameBook", nativeQuery = true)
+    int returnStudent(@Param("nameBook") String nameBook,@Param("idStudent") int idStudent);
 
 
 

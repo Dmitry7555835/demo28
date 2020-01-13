@@ -7,40 +7,18 @@ import java.util.Date;
 public class Student {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     int id;
     String name;
     String password;
-    int id_book;
-    int amount;
     @Temporal(TemporalType.DATE)
-    private Date date_take;
-    @Temporal(TemporalType.DATE)
-    private Date date_return;
+    private Date date_reg;
 
-    public Student() {
-
-    }
+    public Student() {}
 
     public Student(String name, String password) {
         this.name = name;
         this.password = password;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -59,12 +37,12 @@ public class Student {
         this.password = password;
     }
 
-    public int getId_book() {
-        return id_book;
+    public int getId() {
+        return id;
     }
 
-    public void setId_book(int id_book) {
-        this.id_book = id_book;
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
