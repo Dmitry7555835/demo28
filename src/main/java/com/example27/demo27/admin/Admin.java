@@ -1,5 +1,7 @@
 package com.example27.demo27.admin;
 
+import org.springframework.data.jpa.repository.Query;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -7,8 +9,14 @@ import javax.persistence.Id;
 @Entity
 public class Admin {
 
-    static final String adminPass = "admin";
+
+    String query = "insert into admin (id,name,password)  values (2, 'admin', 'admin')";
+
+/*    static final String adminPass = "admin";
     static final String PASSWORD = "admin";
+    static void aaa(){
+        @Query(value = "insert into admin (id,name,password)  values (2, 'admin', 'admin')", nativeQuery = true)
+    }*/
 
     @Id
     @GeneratedValue

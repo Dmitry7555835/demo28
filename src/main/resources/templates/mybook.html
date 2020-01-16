@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:c="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div align="center">
+<form method="get" action="/mybook">
+
+
+    <p style="text-indent:100px" > <input  type="submit", value="Проверить">
+</form>
+</div>
+<div align="center">
+    <h2>BOOK-STUDENT</h2>
+    <table>
+        <thead c:align="center">
+        <tr>
+            <th>Название</th>
+            <th>Дата взятия книги</th>
+            <th>Вернуть не позже</th>
+        </tr>
+        </thead>
+        <tbody c:align="center">
+        <tr th:each="studentBooks : ${studentBooks}">
+            <td th:text="${studentBooks}"></td>
+            <td th:date="${studentBooks}"></td>
+            <td th:date="${studentBooks}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

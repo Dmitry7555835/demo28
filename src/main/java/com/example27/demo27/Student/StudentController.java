@@ -2,17 +2,8 @@ package com.example27.demo27.Student;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.List;
 import java.util.Map;
 
@@ -36,15 +27,11 @@ public class StudentController {
         return "main";
     }
 
-    public void selectId (int idStudent){
-        this.idStudent=idStudent;
-    }
-
     @PostMapping("adduser")
     public String studentadd(@RequestParam String name, @RequestParam String password,
                              Map<String, Object> model) {
         Student student = new Student(name, password);
-        studentRepo.studentadd(name,password);
+        studentRepo.studentadd(name, password);
         return "redirect:/mainBook";
     }
 
@@ -75,7 +62,7 @@ public class StudentController {
         for (int i = 0; i < student.size(); i++) {
             if (student.get(i).toString().equals(name + password)) {
                 studentName = name;
-                idStudent=student.get(i).getId();
+                idStudent = student.get(i).getId();
                 return "MainBook";
             }
         }
@@ -93,8 +80,8 @@ public class StudentController {
         } else if (nameBook == "") {
             System.out.println("Вы ничего не выбрали");
         } else if (!nameBook.toUpperCase().equals(studentRepo.selectBook(nameBook.toUpperCase()))) {
-            System.out.println("нету в наличии книги");--------------------//Добавить бан если не вернул книги СЕЛЕКТ НАПИСАН
-        }                                                   --------------// Добавить метод проверки книг на рукох
+            System.out.println("нету в наличии книги");///--------------------//Добавить бан и анбан если не вернул/вернул книги СЕЛЕКТы НАПИСАНы
+        }                                                 //  --------------// Добавить метод проверки книг на рукох
 
         return "mainBook";
     }
@@ -103,7 +90,7 @@ public class StudentController {
     public String returnBook(@RequestParam("nameBook") String nameBook) {
         if (nameBook.toUpperCase().equals(studentRepo.selectStudent(nameBook.toUpperCase(), studentName))) {
             studentRepo.returnBook(nameBook);
-            studentRepo.returnStudent(nameBook,idStudent);
+            studentRepo.returnStudent(nameBook, idStudent);
             System.out.println("Книга возвращена");
         } else if (!nameBook.toUpperCase().equals(studentRepo.selectStudent(nameBook, studentName))) {
             System.out.println("Вы не брали/вернули эту книгу");
@@ -111,6 +98,15 @@ public class StudentController {
 
         return "mainBook";
     }
+
+    @RequestMapping(value = "mybook", method = RequestMethod.GET)
+    public String myBook(Map<String, Object> model) {
+        String studentBooks = studentRepo.myBook(idStudent);
+        model.put("studentBooks", studentBooks);
+        System.out.println(model.put("studentBooks", studentBooks));
+        return "myBook";
+    }
+
 
 }
 

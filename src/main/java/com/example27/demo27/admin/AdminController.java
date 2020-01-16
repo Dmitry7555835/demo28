@@ -2,6 +2,7 @@ package com.example27.demo27.admin;
 
 import com.example27.demo27.Student.Student;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ public class AdminController {
 
     Student student = new Student();
 
+
     @Autowired
     public AdminRepo adminRepo;
 
@@ -23,6 +25,8 @@ public class AdminController {
         Iterable<Admin> admins = adminRepo.findAll();
         return "MainAdmin";
     }
+
+
 
     @PostMapping("addadmin")
     public String addAdmin(@RequestParam String name, String password, Map<String, Object> modelAdmin) {
