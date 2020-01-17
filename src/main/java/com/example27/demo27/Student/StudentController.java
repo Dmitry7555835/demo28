@@ -101,9 +101,8 @@ public class StudentController {
 
     @RequestMapping(value = "mybook", method = RequestMethod.GET)
     public String myBook(Map<String, Object> model) {
-        String studentBooks = studentRepo.myBook(idStudent);
+        Iterable<StudentBook> studentBooks = studentRepo.myBook(idStudent);
         model.put("studentBooks", studentBooks);
-        System.out.println(model.put("studentBooks", studentBooks));
         return "myBook";
     }
 

@@ -56,7 +56,8 @@ public interface StudentRepo extends CrudRepository<Student, Integer> {
     int returnStudent(@Param("nameBook") String nameBook,@Param("idStudent") int idStudent);
 
     @Query(value ="select  sb.name_book, sb.date_take,sb.date_return from student_Book sb where  sb.id_Student = :idStudent and date_return is not null", nativeQuery = true)
-    String myBook (@Param("idStudent") int idStudent);
+    List<StudentBook>  myBook(@Param("idStudent") int idStudent);
+
 
     @Transactional
     @Modifying

@@ -12,6 +12,7 @@ public interface AdminRepo extends CrudRepository <Admin, Integer> {
 
     List<Admin> findByNameAndPassword(String name, String password);
 
+
     /*@Transactional
     @Modifying
     @Query(value = "insert into admin (id,name,password)  values (2, 'admin', 'admin')", nativeQuery = true)

@@ -24,9 +24,9 @@
         </thead>
         <tbody c:align="center">
         <tr th:each="studentBooks : ${studentBooks}">
-            <td th:text="${studentBooks}"></td>
-            <td th:date="${studentBooks}"></td>
-            <td th:date="${studentBooks }"></td>
+            <td th:text="${studentBooks.name_book}"></td>
+            <td th:date="${studentBooks.date_take}"></td>
+            <td th:date="${studentBooks.date_return}"></td>
         </tr>
         </tbody>
     </table>
