@@ -17,7 +17,7 @@ public class Application {
             Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
             System.out.println("Попытка соединения с базой...");
 
-            try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "1111")){
+            try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/msql_db", "root", "12345")){
                 System.out.println("Соединение с базой установлено");
                 Statement statement = conn.createStatement();
                 System.out.println("Попытка внесения первоначальных значений в базу");
