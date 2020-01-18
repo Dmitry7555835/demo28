@@ -15,7 +15,7 @@ public class Admin {
 /*    static final String adminPass = "admin";
     static final String PASSWORD = "admin";
     static void aaa(){
-        @Query(value = "insert into admin (id,name,password)  values (2, 'admin', 'admin')", nativeQuery = true)
+        @Query(value =
     }*/
 
     @Id

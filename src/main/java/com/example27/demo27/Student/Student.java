@@ -7,15 +7,18 @@ import java.util.Date;
 public class Student {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
-    String name;
     String password;
+    @Column(unique = true)
+    String name;
+
     @Temporal(TemporalType.DATE)
     private Date date_reg;
     String ban;
 
-    public Student() {}
+    public Student() {
+    }
 
     public Student(String name, String password) {
         this.name = name;

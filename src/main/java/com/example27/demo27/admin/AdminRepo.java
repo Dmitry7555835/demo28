@@ -13,10 +13,15 @@ public interface AdminRepo extends CrudRepository <Admin, Integer> {
     List<Admin> findByNameAndPassword(String name, String password);
 
 
-    /*@Transactional
+    @Transactional
     @Modifying
-    @Query(value = "insert into admin (id,name,password)  values (2, 'admin', 'admin')", nativeQuery = true)
-    String AdminContr();*/
+    @Query(value = "update student s set s.ban ='BAN' where s.id = (select id_student from student_Book where CURDATE()-date_take>=1 )", nativeQuery = true)
+    int ban();
+
+    @Transactional
+    @Modifying
+    @Query(value = "update student s set s.ban =null where s.id = (select id_student from student_Book where date_return  is not null) ", nativeQuery = true)
+    int unBan();
 
 
 }

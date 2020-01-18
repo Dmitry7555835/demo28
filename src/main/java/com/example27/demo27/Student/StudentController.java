@@ -31,6 +31,7 @@ public class StudentController {
     public String studentadd(@RequestParam String name, @RequestParam String password,
                              Map<String, Object> model) {
         Student student = new Student(name, password);
+      //  idStudent = student.get(i).getId(); добавить получение id при регистрации, а то косяк
         studentRepo.studentadd(name, password);
         return "redirect:/mainBook";
     }
@@ -103,8 +104,11 @@ public class StudentController {
     public String myBook(Map<String, Object> model) {
         Iterable<StudentBook> studentBooks = studentRepo.myBook(idStudent);
         model.put("studentBooks", studentBooks);
+        System.out.println(   model.put("studentBooks", studentBooks));
         return "myBook";
     }
+
+    
 
 
 }
