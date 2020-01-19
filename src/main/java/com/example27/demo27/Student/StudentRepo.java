@@ -32,8 +32,8 @@ public interface StudentRepo extends CrudRepository<Student, Integer> {
     @Query("select UPPER(b) from Book b where UPPER(b.name)=:nameBook and b.amount>0")                      //+++++++++++++++++++++++++
     String selectBook(@Param("nameBook") String nameBook);
 
-    @Query("select UPPER(b) from Book b where b.name in (select sb from StudentBook sb where sb.id_Student in" +
-            "(select s from Student s where s.id=:studentId) and sb.date_return is null ) and b.name=:nameBook")      //+++++++++++
+    @Query("select UPPER(b.name) from Book b where b.name in (select sb.name_Book from StudentBook sb where sb.id_Student in" +
+            "(select s.id from Student s where s.id=:studentId) and sb.date_return is null ) and b.name=:nameBook")      //+++++++++++
     String selectStudent(@Param("nameBook") String nameBook, @Param("studentId") int studentId);//проверка наличия книги на руках
 
 /*    @Transactional

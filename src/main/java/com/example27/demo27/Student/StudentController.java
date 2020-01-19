@@ -94,6 +94,7 @@ public class StudentController {
         if (nameBook.toUpperCase().equals(studentRepo.selectStudent(nameBook.toUpperCase(), idStudent))) {
             studentRepo.returnBook(nameBook);
             studentRepo.returnStudent(nameBook, idStudent);
+            System.out.println(nameBook+' '+studentRepo.selectStudent(nameBook.toUpperCase(),idStudent));
             System.out.println("Книга возвращена");
         } else if (!nameBook.toUpperCase().equals(studentRepo.selectStudent(nameBook, idStudent))) {
             System.out.println("Вы (не брали)/вернули эту книгу");
@@ -108,6 +109,7 @@ public class StudentController {
         model.put("studentBooks", studentBooks);
         System.out.println(model.put("studentBooks", studentBooks));
     }
+
 }
 
 
