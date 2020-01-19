@@ -12,7 +12,7 @@ public class StudentBook {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     int id_book;
-    String id_Student;
+    int id_Student;
     public String name_Book;
     @Temporal(TemporalType.DATE)
     public Date date_take;
@@ -39,14 +39,14 @@ public class StudentBook {
     }
 
     public StudentBook(int id_Student) {
-        this.id_Student= String.valueOf(id_Student);
+        this.id_Student= (id_Student);
     }
 
-    public String getId_Student() {
+    public int getId_Student() {
         return id_Student;
     }
 
-    public void setId_Student(String id_Student) {
+    public void setId_Student(int id_Student) {
         this.id_Student = id_Student;
     }
 

@@ -19,43 +19,54 @@ public interface StudentRepo extends CrudRepository<Student, Integer> {
 
     List<Student> findByNameAndPassword(String name, String password);
 
+    public Student save (Student student);
+
+
     @Transactional
     @Modifying
     @Query(value = "insert into student (name,password,date_reg) select :studentName,:studentpassword, current_date ()",nativeQuery = true)
     int studentadd ( @Param("studentName") String studentName, @Param("studentpassword") String studentpassword);
 
-    @Query(value = "select UPPER(name) from book b where UPPER(name)=:nameBook and amount>0", nativeQuery = true)
+
+
+    @Query("select UPPER(b) from Book b where UPPER(b.name)=:nameBook and b.amount>0")                      //+++++++++++++++++++++++++
     String selectBook(@Param("nameBook") String nameBook);
 
-    @Query(value = "select UPPER(b.name) from book b where b.name in " +
-            "(select sb.name_book from student_book sb where sb.id_student in " +
-            "(select id from student s where name =:studentName) and date_return is null) " +
-            "and b.name =:nameBook", nativeQuery = true)
-    String selectStudent(@Param("nameBook") String nameBook, @Param("studentName") String studentName);//проверка наличия книги на руках
+    @Query("select UPPER(b) from Book b where b.name in (select sb from StudentBook sb where sb.id_Student in" +
+            "(select s from Student s where s.id=:studentId) and sb.date_return is null ) and b.name=:nameBook")      //+++++++++++
+    String selectStudent(@Param("nameBook") String nameBook, @Param("studentId") int studentId);//проверка наличия книги на руках
+
+/*    @Transactional
+    @Modifying
+    @Query(value = "insert into student_book (date_take, id_student,name_book) " +
+            "select curdate(), s.id, b.name from student s RIGHT JOIN book b on s.id = :studentId  and  b.name = :nameBook where s.id is not null and b.name is not null", nativeQuery = true)
+    int takeBook(@Param("nameBook") String nameBook, @Param("studentId") int studentId);*/
 
     @Transactional
     @Modifying
     @Query(value = "insert into student_book (date_take, id_student,name_book) " +
-            "select current_date, s.id, b.name from student s RIGHT JOIN book b on s.id = :studentId  and  b.name = :nameBook where s.id is not null and b.name is not null", nativeQuery = true)
+            "select current_date, s.id, b.name from student s RIGHT JOIN book b on " +
+            "s.id = :studentId  and  b.name = :nameBook where s.id is not null and b.name is not null", nativeQuery = true)
     int takeBook(@Param("nameBook") String nameBook, @Param("studentId") int studentId);
 
 
-    @Transactional
+
     @Modifying
-    @Query(value = "update book b set b.amount=b.amount-1 where UPPER(b.name)=:nameBook", nativeQuery = true)
+    @Query("update Book b set b.amount=b.amount-1 where UPPER(b.name)=:nameBook")    //++++++++++++++++++++
     int updateBookAmount(@Param("nameBook") String nameBook);
 
     @Transactional
     @Modifying
-    @Query(value = "update book b set b.amount=b.amount+1 where UPPER(name)=:nameBook", nativeQuery = true)
+    @Query("update Book b set b.amount=b.amount+1 where UPPER(b.name)=:nameBook")     //++++++++++++++++++++
     int returnBook(@Param("nameBook") String nameBook);
 
     @Transactional
     @Modifying
-    @Query(value = "update student_book sb set sb.date_return =current_date  where sb.id_Student = :idStudent and  sb.name_book = :nameBook", nativeQuery = true)
+    @Query("update StudentBook sb set sb.date_return =current_date  where sb.id_Student = :idStudent and  sb.name_Book = :nameBook")    //+++++++++++++++++++++++
     int returnStudent(@Param("nameBook") String nameBook,@Param("idStudent") int idStudent);
 
-    @Query(value ="select  sb.name_book, sb.date_take,sb.date_return from student_book sb where  sb.id_Student = :idStudent and date_return is not null", nativeQuery = true)
-    List<StudentBook>  myBook(@Param("idStudent") int idStudent);
+    @Query("select upper(sb.name_Book), sb.date_take, sb.date_return from StudentBook sb where sb.id_Student=:idStudent")                 //++++++++++++++
+    Iterable<StudentBook> myBook(@Param("idStudent") int idStudent);
+
 
 }

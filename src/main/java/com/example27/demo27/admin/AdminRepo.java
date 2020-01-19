@@ -20,7 +20,7 @@ public interface AdminRepo extends CrudRepository <Admin, Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "update student s set s.ban =null where s.id = (select id_student from student_book where date_return  is not null) ", nativeQuery = true)
+    @Query(value = "update student s set s.ban =null where s.id = (select id_student from student_book where date_return  is  null) ", nativeQuery = true)
     int unBan();
 
 

@@ -27,18 +27,20 @@ public class StudentController {
         return "main";
     }
 
+
     @PostMapping("adduser")
     public String studentadd(@RequestParam String name, @RequestParam String password,
                              Map<String, Object> model) {
         Student student = new Student(name, password);
-      //  idStudent = student.get(i).getId(); добавить получение id при регистрации, а то косяк
+        //  idStudent = student.get(i).getId(); добавить получение id при регистрации, а то косяк
         studentRepo.studentadd(name, password);
         return "redirect:/mainBook";
     }
 
+
     @PostMapping("finduser")
     public String find(@RequestParam int find, Map<String, Object> model) {
-        Iterable<Student> student = studentRepo.findById(find);
+        List<Student> student = studentRepo.findById(find);
         model.put("student", student);
         return "mainadmin";
     }
@@ -72,7 +74,7 @@ public class StudentController {
 
     @PostMapping("/take")
     public String takeBook(@RequestParam("nameBook") String nameBook) {
-        if (nameBook.toUpperCase().equals(studentRepo.selectStudent(nameBook, studentName))) {
+        if (nameBook.toUpperCase().equals(studentRepo.selectStudent(nameBook, idStudent))) {
             System.out.println("Книга у вас на руках");
         } else if (nameBook.toUpperCase().equals(studentRepo.selectBook(nameBook.toUpperCase()))) {
             studentRepo.updateBookAmount(nameBook);
@@ -81,36 +83,31 @@ public class StudentController {
         } else if (nameBook == "") {
             System.out.println("Вы ничего не выбрали");
         } else if (!nameBook.toUpperCase().equals(studentRepo.selectBook(nameBook.toUpperCase()))) {
-            System.out.println("нету в наличии книги");///--------------------//Добавить бан и анбан если не вернул/вернул книги СЕЛЕКТы НАПИСАНы
-        }                                                 //  --------------// Добавить метод проверки книг на рукох
+            System.out.println("нету в наличии книги");
+        }
 
         return "mainBook";
     }
 
     @PostMapping("/returnbook")
     public String returnBook(@RequestParam("nameBook") String nameBook) {
-        if (nameBook.toUpperCase().equals(studentRepo.selectStudent(nameBook.toUpperCase(), studentName))) {
+        if (nameBook.toUpperCase().equals(studentRepo.selectStudent(nameBook.toUpperCase(), idStudent))) {
             studentRepo.returnBook(nameBook);
             studentRepo.returnStudent(nameBook, idStudent);
             System.out.println("Книга возвращена");
-        } else if (!nameBook.toUpperCase().equals(studentRepo.selectStudent(nameBook, studentName))) {
-            System.out.println("Вы не брали/вернули эту книгу");
+        } else if (!nameBook.toUpperCase().equals(studentRepo.selectStudent(nameBook, idStudent))) {
+            System.out.println("Вы (не брали)/вернули эту книгу");
         }
 
         return "mainBook";
     }
 
     @RequestMapping(value = "mybook", method = RequestMethod.GET)
-    public String myBook(Map<String, Object> model) {
+    public void myBook(Map<String, Object> model) {
         Iterable<StudentBook> studentBooks = studentRepo.myBook(idStudent);
         model.put("studentBooks", studentBooks);
-        System.out.println(   model.put("studentBooks", studentBooks));
-        return "myBook";
+        System.out.println(model.put("studentBooks", studentBooks));
     }
-
-    
-
-
 }
 
 
