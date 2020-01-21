@@ -73,7 +73,7 @@ public class StudentController {
     }
 
     @PostMapping("/take")
-    public String takeBook(@RequestParam("nameBook") String nameBook) {
+    public int  takeBook(@RequestParam("nameBook") String nameBook) {
         if (nameBook.toUpperCase().equals(studentRepo.selectStudent(nameBook, idStudent))) {
             System.out.println("Книга у вас на руках");
         } else if (nameBook.toUpperCase().equals(studentRepo.selectBook(nameBook.toUpperCase()))) {
@@ -85,8 +85,7 @@ public class StudentController {
         } else if (!nameBook.toUpperCase().equals(studentRepo.selectBook(nameBook.toUpperCase()))) {
             System.out.println("нету в наличии книги");
         }
-
-        return "mainBook";
+        return Integer.parseInt("mainBook");///////////////ТУТ
     }
 
     @PostMapping("/returnbook")

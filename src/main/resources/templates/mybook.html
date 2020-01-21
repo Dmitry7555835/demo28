@@ -23,13 +23,14 @@
         </tr>
         </thead>
         <tbody c:align="center">
-        <tr th:each="studentBooks : ${studentBooks}">
-            <td th:text="${studentBooks.name_book}"></td>
-            <td th:date="${studentBooks.date_take}"></td>
-            <td th:date="${studentBooks.date_return}"></td>
+        <tr th:each="studentBook : ${studentBooks}">
+            <td th:text="${studentBook.name_Book}"></td>
+            <td th:text="${studentBook.date_take}"></td>
+            <td th:text="${studentBook.date_return}"></td>
         </tr>
         </tbody>
     </table>
+    <p> <a href="/main">Вернуться на предыдущую страницу</a></p>
 </div>
 </body>
 </html>
