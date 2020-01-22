@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+import static org.thymeleaf.util.StringUtils.concat;
+
 @Controller
 public class StudentController {
 
@@ -39,7 +41,7 @@ public class StudentController {
         return "redirect:/mainBook";
     }
 
-    @RequestMapping(value = "/autorizationuser", method = RequestMethod.POST)
+    @RequestMapping(value = "/autorizationuser", produces = "application/json")
     public String autorizationuser(@RequestParam(required = false) String name, @RequestParam(required = false) String password,
                                    Map<String, Object> model) {
         List<Student> student = studentRepo.findByNameAndPassword(name, password);
@@ -75,7 +77,7 @@ public class StudentController {
     }
 
     @RequestMapping(value = "/take", method = RequestMethod.POST)
-    public void takeBook(@RequestParam("nameBook") String nameBook) {
+    public String takeBook(@RequestParam("nameBook") String nameBook) {
         if (nameBook.toUpperCase().equals(studentRepo.selectStudent(nameBook, idStudent))) {
             System.out.println("Книга у вас на руках");
         } else if (nameBook.toUpperCase().equals(studentRepo.selectBook(nameBook.toUpperCase()))) {
@@ -87,11 +89,12 @@ public class StudentController {
         } else if (!nameBook.toUpperCase().equals(studentRepo.selectBook(nameBook.toUpperCase()))) {
             System.out.println("нету в наличии книги");
         }
+        return "mainBook";
     }
 
     @PostMapping("/returnbook")
     public String returnBook(@RequestParam("nameBook") String nameBook) {
-        if (nameBook.toUpperCase().equals(studentRepo.selectStudent(nameBook.toUpperCase(), idStudent))) {
+        if (nameBook.equals(studentRepo.selectStudent(nameBook, idStudent))) {
             studentRepo.returnBook(nameBook);
             studentRepo.returnStudent(nameBook, idStudent);
             System.out.println(nameBook + ' ' + studentRepo.selectStudent(nameBook.toUpperCase(), idStudent));

@@ -11,13 +11,22 @@ public class StudentBook {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    int id_book;
+    int skey;
     int id_Student;
     public String name_Book;
     @Temporal(TemporalType.DATE)
     public Date date_take;
     @Temporal(TemporalType.DATE)
     public Date date_return;
+    public String flag;
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
+    }
 
     public String getName_Book() {
         return name_Book;
@@ -31,11 +40,11 @@ public class StudentBook {
     }
 
     public int getId_book() {
-        return id_book;
+        return skey;
     }
 
     public void setId_book(int id_book) {
-        this.id_book = id_book;
+        this.skey = id_book;
     }
 
     public StudentBook(int id_Student) {

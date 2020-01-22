@@ -33,17 +33,15 @@ public interface StudentRepo extends CrudRepository<Student, Integer> {
     String selectBook(@Param("nameBook") String nameBook);
 
 
-    @Query("select b from Book b where b.name in (select sb from StudentBook sb where sb in (select s from Student s where s.id=:studentId )" +
-            "and sb.date_return is null )and b.name=:nameBook")
+    @Query("select sb.name_Book from StudentBook sb where sb.id_Student=:studentId  and sb.name_Book=:nameBook and sb.flag='N'")
     String selectStudent(@Param("nameBook") String nameBook, @Param("studentId") int studentId);
 
     @Transactional
     @Modifying
-    @Query(value = "insert into student_book (date_take,date_return, id_student,name_book) " +
-            "select current_date,date_add(current_date, interval 14 day ), s.id, b.name from student s RIGHT JOIN book b on " +
+    @Query(value = "insert into student_book (date_take,date_return, id_student,name_book, flag) " +
+            "select current_date,date_add(current_date, interval 14 day ), s.id, b.name, 'N' from student s RIGHT JOIN book b on " +
             "s.id = :studentId  and  b.name = :nameBook where s.id is not null and b.name is not null", nativeQuery = true)
     int takeBook(@Param("nameBook") String nameBook, @Param("studentId") int studentId);
-
 
     @Transactional
     @Modifying
@@ -57,10 +55,10 @@ public interface StudentRepo extends CrudRepository<Student, Integer> {
 
     @Transactional
     @Modifying
-    @Query("update StudentBook sb set sb.date_return =current_date  where sb.id_Student = :idStudent and  sb.name_Book = :nameBook")    //+++++++++++++++++++++++
+    @Query("update StudentBook sb set sb.date_return =current_date, sb.flag='Y'   where sb.id_Student = :idStudent and  sb.name_Book = :nameBook")    //+++++++++++++++++++++++
     int returnStudent(@Param("nameBook") String nameBook,@Param("idStudent") int idStudent);
 
-    @Query("select sb from StudentBook sb where sb.id_Student=:idStudent")                 //++++++++++++++
+    @Query("select sb from StudentBook sb where sb.id_Student=:idStudent and sb.flag='N'")                 //++++++++++++++
     Iterable<StudentBook> myBook(@Param("idStudent") int idStudent);
 
 }
