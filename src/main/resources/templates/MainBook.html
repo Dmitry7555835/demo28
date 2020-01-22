@@ -72,13 +72,13 @@
 
 <div align="center">
     <h2>BOOK</h2>
-    <table>
+    <table border="1">
         <thead c:align="center">
         <tr>
-            <th>id</th>
-            <th>name</th>
-            <th>autor</th>
-            <th>наличие</th>
+            <td>id</td>
+            <td>name</td>
+            <td>autor</td>
+            <td>наличие</td>
         </tr>
         </thead>
         <tbody c:align="center">
@@ -87,6 +87,7 @@
             <td th:text="${book.name}"></td>
             <td th:text="${book.autor}"></td>
             <td th:text="${book.amount}"></td>
+            <td> <input type="submit" , value="Взять книгу"></td>пока не работает
         </tr>
         </tbody>
     </table>
