@@ -19,13 +19,13 @@ public interface StudentRepo extends CrudRepository<Student, Integer> {
 
     List<Student> findByNameAndPassword(String name, String password);
 
-    public Student save (Student student);
-
-
     @Transactional
     @Modifying
     @Query(value = "insert into student (name,password,date_reg) select :studentName,:studentpassword, current_date ()",nativeQuery = true)
     int studentadd ( @Param("studentName") String studentName, @Param("studentpassword") String studentpassword);
+
+    @Query("select s.id from  Student s where s.name=:studentName and s.password=:studentpassword")
+    int studentId ( @Param("studentName") String studentName, @Param("studentpassword") String studentpassword);
 
 
 
@@ -39,8 +39,8 @@ public interface StudentRepo extends CrudRepository<Student, Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "insert into student_book (date_take, id_student,name_book) " +
-            "select current_date, s.id, b.name from student s RIGHT JOIN book b on " +
+    @Query(value = "insert into student_book (date_take,date_return, id_student,name_book) " +
+            "select current_date,date_add(current_date, interval 14 day ), s.id, b.name from student s RIGHT JOIN book b on " +
             "s.id = :studentId  and  b.name = :nameBook where s.id is not null and b.name is not null", nativeQuery = true)
     int takeBook(@Param("nameBook") String nameBook, @Param("studentId") int studentId);
 

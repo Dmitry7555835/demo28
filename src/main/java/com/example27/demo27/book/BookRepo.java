@@ -14,6 +14,4 @@ public interface BookRepo  extends CrudRepository<Book, Integer>  {
 
     List<Book> findByName (String name);
 
-
-
 }

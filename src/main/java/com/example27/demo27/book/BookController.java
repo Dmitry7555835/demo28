@@ -1,11 +1,11 @@
 package com.example27.demo27.book;
 
+import com.example27.demo27.Student.StudentBook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -37,18 +37,16 @@ public class BookController {
     }
 
     @PostMapping("findBook")
-    public String findBook(@RequestParam (required = false) String name, Map<String, Object>modelBooks) {//Не отображает книгу
-        Iterable<Book> books = bookRepo.findByName(name);
+    public String findByName(@RequestParam("nameBook") String nameBook, Map<String, Object> modelBooks) {//Не отображает книгу
+        Iterable<Book> books = bookRepo.findByName(nameBook);
         modelBooks.put("book", books);
         return "mainBook";
     }
 
     @PostMapping("findAllBook")
-    public String findall( Map<String, Object> modelBooks) {
+    public String findall(Map<String, Object> modelBooks) {
         Iterable<Book> books = bookRepo.findAll();
         modelBooks.put("book", books);
         return "mainBook";
     }
-
-
 }

@@ -1,5 +1,6 @@
 package com.example27.demo27.Student;
 
+import com.example27.demo27.book.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -32,9 +33,24 @@ public class StudentController {
     public String studentadd(@RequestParam String name, @RequestParam String password,
                              Map<String, Object> model) {
         Student student = new Student(name, password);
-        //  idStudent = student.get(i).getId(); добавить получение id при регистрации, а то косяк
-        studentRepo.studentadd(name, password);
+        studentRepo.studentadd(name,password);
+        idStudent = studentRepo.studentId(name, password);
+
         return "redirect:/mainBook";
+    }
+
+    @PostMapping("/autorizationuser")
+    public String autorizationuser(@RequestParam(required = false) String name, @RequestParam(required = false) String password,
+                                   Map<String, Object> model) {
+        List<Student> student = studentRepo.findByNameAndPassword(name, password);
+        for (int i = 0; i < student.size(); i++) {
+            if (student.get(i).toString().equals(name + password)) {
+                studentName = name;
+                idStudent = student.get(i).getId();
+                return "MainBook";
+            }
+        }
+        return "/autorizationuser";
     }
 
 
@@ -58,22 +74,8 @@ public class StudentController {
         return "mainadmin";
     }
 
-    @GetMapping("/autorizationuser")
-    public String autorizationuser(@RequestParam(required = false) String name, @RequestParam(required = false) String password,
-                                   Map<String, Object> model) {
-        List<Student> student = studentRepo.findByNameAndPassword(name, password);
-        for (int i = 0; i < student.size(); i++) {
-            if (student.get(i).toString().equals(name + password)) {
-                studentName = name;
-                idStudent = student.get(i).getId();
-                return "MainBook";
-            }
-        }
-        return "/autorizationuser";
-    }
-
-    @PostMapping("/take")
-    public int  takeBook(@RequestParam("nameBook") String nameBook) {
+    @RequestMapping(value = "/take", method = RequestMethod.POST)
+    public void takeBook(@RequestParam("nameBook") String nameBook) {
         if (nameBook.toUpperCase().equals(studentRepo.selectStudent(nameBook, idStudent))) {
             System.out.println("Книга у вас на руках");
         } else if (nameBook.toUpperCase().equals(studentRepo.selectBook(nameBook.toUpperCase()))) {
@@ -85,7 +87,6 @@ public class StudentController {
         } else if (!nameBook.toUpperCase().equals(studentRepo.selectBook(nameBook.toUpperCase()))) {
             System.out.println("нету в наличии книги");
         }
-        return Integer.parseInt("mainBook");///////////////ТУТ
     }
 
     @PostMapping("/returnbook")
@@ -93,7 +94,7 @@ public class StudentController {
         if (nameBook.toUpperCase().equals(studentRepo.selectStudent(nameBook.toUpperCase(), idStudent))) {
             studentRepo.returnBook(nameBook);
             studentRepo.returnStudent(nameBook, idStudent);
-            System.out.println(nameBook+' '+studentRepo.selectStudent(nameBook.toUpperCase(),idStudent));
+            System.out.println(nameBook + ' ' + studentRepo.selectStudent(nameBook.toUpperCase(), idStudent));
             System.out.println("Книга возвращена");
         } else if (!nameBook.toUpperCase().equals(studentRepo.selectStudent(nameBook, idStudent))) {
             System.out.println("Вы (не брали)/вернули эту книгу");
