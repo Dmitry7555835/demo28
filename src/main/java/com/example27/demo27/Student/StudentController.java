@@ -39,7 +39,7 @@ public class StudentController {
         return "redirect:/mainBook";
     }
 
-    @PostMapping("/autorizationuser")
+    @RequestMapping(value = "/autorizationuser", method = RequestMethod.POST)
     public String autorizationuser(@RequestParam(required = false) String name, @RequestParam(required = false) String password,
                                    Map<String, Object> model) {
         List<Student> student = studentRepo.findByNameAndPassword(name, password);
