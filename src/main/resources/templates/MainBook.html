@@ -70,6 +70,7 @@
 </div>
 
 
+<form method="post" action="/take">
 <div align="center">
     <h2>BOOK</h2>
     <table border="1">
@@ -87,11 +88,13 @@
             <td th:text="${book.name}"></td>
             <td th:text="${book.autor}"></td>
             <td th:text="${book.amount}"></td>
-            <td> <input type="submit" , value="Взять книгу"></td>пока не работает
+            <td> <input type="submit", value="Взять книгу">пока не работает</td>
         </tr>
         </tbody>
     </table>
 </div>
+</form>
+
 
 <form method="post" action="/returnbook">
     <div><input type="text" name="nameBook" placeholder="Название книги"></div>
@@ -99,3 +102,4 @@
 </form>
 </body>
 </html>
+
